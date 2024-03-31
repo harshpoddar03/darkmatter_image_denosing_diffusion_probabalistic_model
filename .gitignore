@@ -6,5 +6,6 @@
 *.h5
 *.pyc
 *.bin
+*.png
 
 03_Model/ensemble_model/*.bin
