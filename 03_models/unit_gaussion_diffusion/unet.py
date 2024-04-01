@@ -91,8 +91,7 @@ class ResidualBlock(Module):
     Each resolution is processed with two residual blocks.
     """
 
-    def __init__(self, in_channels: int, out_channels: int, time_channels: int,
-                 n_groups: int = 32, dropout: float = 0.1):
+    def __init__(self, in_channels: int, out_channels: int, time_channels: int, n_groups: int = 32, dropout: float = 0.1):
         """
         * `in_channels` is the number of input channels
         * `out_channels` is the number of input channels
