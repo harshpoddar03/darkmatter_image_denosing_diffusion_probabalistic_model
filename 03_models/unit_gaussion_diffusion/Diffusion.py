@@ -128,3 +128,30 @@ class DenoiseDiffusion:
 
         # MSE loss
         return F.mse_loss(noise, eps_theta)
+    
+    
+    def noise(self, x0: torch.Tensor, noise: Optional[torch.Tensor] = None):
+        """
+        #### Simplified Loss
+
+        $$L_{\text{simple}}(\theta) = \mathbb{E}_{t,x_0, \epsilon} \Bigg[ \bigg\Vert
+        \epsilon - \textcolor{lightgreen}{\epsilon_\theta}(\sqrt{\bar\alpha_t} x_0 + \sqrt{1-\bar\alpha_t}\epsilon, t)
+        \bigg\Vert^2 \Bigg]$$
+        """
+        # Get batch size
+        batch_size = x0.shape[0]
+        # Get random $t$ for each sample in the batch
+        t = torch.randint(0, self.n_steps, (batch_size,), device=x0.device, dtype=torch.long)
+
+        # $\epsilon \sim \mathcal{N}(\mathbf{0}, \mathbf{I})$
+        if noise is None:
+            noise = torch.randn_like(x0)
+
+        # Sample $x_t$ for $q(x_t|x_0)$
+        xt = self.q_sample(x0, t, eps=noise)
+        # Get $\textcolor{lightgreen}{\epsilon_\theta}(\sqrt{\bar\alpha_t} x_0 + \sqrt{1-\bar\alpha_t}\epsilon, t)$
+        eps_theta = self.eps_model(xt, t)
+
+        # MSE loss
+        return eps_theta
+
