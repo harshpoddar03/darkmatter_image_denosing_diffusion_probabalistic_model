@@ -7,5 +7,6 @@
 *.pyc
 *.bin
 *.png
+*.pth
 
 03_Model/ensemble_model/*.bin

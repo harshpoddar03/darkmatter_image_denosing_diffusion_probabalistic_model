@@ -98,6 +98,11 @@ class DenoiseDiffusion:
         eps = torch.randn(xt.shape, device=xt.device)
         # Sample
         return mean + (var ** .5) * eps
+    
+    def save_model(self, file_path):
+        # Implement saving logic here
+        # For example, if you have parameters stored in a dictionary:
+        torch.save(self.model_parameters, file_path)
 
     def loss(self, x0: torch.Tensor, noise: Optional[torch.Tensor] = None):
         """
