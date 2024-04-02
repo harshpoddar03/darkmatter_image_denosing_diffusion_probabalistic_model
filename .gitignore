@@ -8,5 +8,6 @@
 *.bin
 *.png
 *.pth
+*.pt
 
 03_Model/ensemble_model/*.bin
